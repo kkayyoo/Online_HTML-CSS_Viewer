@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+ <head>
+ <title>Learning jQuery</title>
+
+ <meta charset="utf-8" />
+ <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<style>
+
+	body{
+
+		margin: 0;
+		padding: 0;
+   		font-family: "HelveticaNeue-Light", "Helvetica Neue Light","Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;font-weight: 300;
+
+	}
+
+	#menuBar{
+		width: 100%;
+		height: 40px;
+		background-color: #e0e0e0;
+		border-bottom: 1px solid grey;
+	}
+
+	#logo{
+		padding: 5px 0 0 20px;
+		font-weight: bold;
+		font-size: 120%;
+		float: left;
+	}
+
+	#buttinDiv{
+		float: right;
+		padding: 5px 10px 0 0;
+	}
+
+	#runButton{
+		font-size: 120%;
+	}
+
+	#toggles{
+		width: 250.5px;
+		margin: 0 auto;
+		list-style: none;
+		border: 1px solid grey;
+		border-radius: 3px;
+		height: 27px;
+		padding: 0;
+		position: relative;
+		top: 5px;
+
+			}
+
+	#toggles li{
+		float: left;
+		border-right: 1px solid grey;
+		padding: 5px 7px;
+	}
+
+	.clear{
+		clear: both;
+	}
+
+	.codeContainer{
+		height: 100%;
+		width: 50%;
+		float: left;
+		position: relative;
+	}
+
+	.codeContainer textarea{
+		width: 99%;
+		height: 100%;
+		border: none;
+		border-right: 1px solid grey;
+		font-family: monotype;
+		font-size: 90%;
+		padding: 5px;
+		box-sizing:border-box;
+		padding: 10px;
+
+	}
+
+	.codeLabel{
+		position: absolute;
+		right: 10px;
+		top: 10px;
+	}
+
+	#CSSContainer, #javaScriptContainer{
+		display: none;
+	}
+
+	iframe{
+		height: 100%;
+		position: relative;
+		left: 20px;
+		border: none;
+	}
+
+	.selected{
+		background-color: grey;
+	}
+	
+</style>
+ 
+
+ </head>
+
+ <body>
+ 	<div id="wrapper">
+ 		
+ 		<div id="menuBar">
+
+ 			<div id="logo">
+
+ 				Let's Code
+
+ 			</div>
+
+ 			<div id="buttinDiv">
+
+ 				<button id="runButton">Run</button>
+ 				
+ 			</div>
+
+ 			<ul id="toggles">
+ 				
+ 				<li class="toggle selected">HTML</li>
+ 				<li class="toggle">CSS</li>
+ 				<li class="toggle">javaScript</li>
+ 				<li class="toggle selected" style="border:none">Results</li>
+ 			</ul>
+ 			
+ 		</div>
+
+ 		<div class="clear"></div>
+		
+		<div class="codeContainer" id="HTMLContainer">
+
+			<div class="codeLabel">HTML</div>
+
+			<textarea id="htmlCode"><div id="try">Try something</div></textarea>
+
+		</div>
+
+		<div class="codeContainer" id="CSSContainer">
+
+			<div class="codeLabel">CSS</div>
+
+			<textarea id="cssCode">
+
+				#try{
+					background:blue;
+				}
+			</textarea>
+
+		</div>
+
+		<div class="codeContainer" id="javaScriptContainer">
+
+			<div class="codeLabel">javaScript</div>
+
+			<textarea id="jsCode">alert("You are smart!")</textarea>
+
+		</div>
+
+		<div class="codeContainer" id="ResultsContainer">
+
+			<div class="codeLabel">Results</div>
+
+			<iframe id="resultFrame"></iframe>
+
+		</div>
+
+
+ 	</div>
+ 	
+ 
+
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+<script>
+	
+	var windowHeight=$(window).height();
+	var menuBarHeight=$("#menuBar").height();
+
+	var codeContainerHeight = windowHeight-menuBarHeight;
+
+	$(".codeContainer").height(codeContainerHeight+"px");
+	
+	$(".toggle").click(function () {
+		
+		$(this).toggleClass("selected");
+
+		var activeDiv=$(this).html();
+
+		$("#"+activeDiv+"Container").toggle();
+
+		var showingDivs=$(".codeContainer").filter(function(){
+
+			return($(this).css("display")!="none");
+
+		}).length;
+
+		var width=100/showingDivs;
+
+		$(".codeContainer").css("width", width+"%");
+
+	});
+
+	$("#runButton").click(function(){
+
+		$("#resultFrame").contents().find("html").html("<style>"+$("#cssCode").val()+"</style>"+$("#htmlCode").val());
+
+		
+
+	});
+
+
+</script> 
+
+</body>
+
+
+
+</html>
